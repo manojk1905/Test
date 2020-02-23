@@ -14,7 +14,15 @@ import static com.txt.filereader.constants.Constants.PROCESSOR_TH_COUNT;
 import static com.txt.filereader.constants.Constants.WORD_STR_REGEX;
 
 public class TestProcessor {
+    /*
+    processor will fetch the record from blocking queue and process it in word frequency count.
+    Here we are using 2 partition, mean 2 thread are reading the blocking queue in parallel.
+    Than finally combining the each partition into a sorted final map.
+    we can increase the PROCESSOR_TH_COUNT as per the need.
 
+    If the file size getting increase to 1 TB it is not better to use the data in memory, in that scenario the
+    best approach will in each partition thread will update the word freq count into database, better to use no-sql db.
+     */
     public Map<String, Integer> processFile(BlockingQueue<String> blockingQueue, ConcurrentHashMap<String, Integer> wordFreqCountMap, AtomicBoolean isCompleted, ExecutorService executorService) throws InterruptedException {
         List<Future<Map<String, Integer>>> completableFuture = new ArrayList<>();
 

@@ -13,6 +13,10 @@ import static com.txt.filereader.constants.Constants.RESOURCE_URL;
 
 public class TextReader {
 
+    /*
+    Reading Input file via one thread only and adding into blocking queue, we can increase the
+    READER_TH_COUNT more that 1 as per the requirement.
+     */
     public void readTextData(BlockingQueue<String> blockingQueue, AtomicBoolean isCompleted, ExecutorService executorService) throws IOException {
         URL url = new URL(RESOURCE_URL);
         BufferedReader inputReader = new BufferedReader(new InputStreamReader(url.openStream(), "UTF8"));
